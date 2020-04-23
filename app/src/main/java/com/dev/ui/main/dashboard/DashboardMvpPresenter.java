@@ -1,5 +1,6 @@
 package com.dev.ui.main.dashboard;
 
+import com.dev.data.network.model.Story;
 import com.dev.di.PerActivity;
 import com.dev.ui.base.MvpPresenter;
 
@@ -7,4 +8,6 @@ import com.dev.ui.base.MvpPresenter;
 public interface DashboardMvpPresenter<V extends DashboardMvpView> extends MvpPresenter<V> {
 
     void getTopStories();
+
+    void storeStory(Story story);
 }

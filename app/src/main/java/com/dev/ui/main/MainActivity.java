@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.dev.R;
 import com.dev.data.prefs.PreferencesHelper;
@@ -25,7 +24,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     MainMvpPresenter<MainMvpView> mPresenter;
 
     @BindView(R.id.feed_view_pager)
-    ViewPager mViewPager;
+    ViewPager2 mViewPager;
 
     @Inject
     MainPagerAdapter mPagerAdapter;
@@ -55,10 +54,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     protected void setUp() {
-        mPagerAdapter.setCount(2);
-        mViewPager.setOffscreenPageLimit(0);
+        mPagerAdapter.setCount(3);
+        mViewPager.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(0);
+        mViewPager.setUserInputEnabled(false);
     }
 
     @Override
@@ -87,6 +87,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     public void onBackPressed() {
         if (mViewPager.getCurrentItem() > 0)
             mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1);
-        super.onBackPressed();
+        else
+            super.onBackPressed();
     }
 }

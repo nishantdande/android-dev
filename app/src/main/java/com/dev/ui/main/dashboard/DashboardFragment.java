@@ -81,10 +81,9 @@ public class DashboardFragment extends BaseFragment implements DashboardMvpView,
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser)
-            mPresenter.getTopStories();
+    public void onResume() {
+        super.onResume();
+        mPresenter.getTopStories();
     }
 
     @Override
@@ -102,7 +101,8 @@ public class DashboardFragment extends BaseFragment implements DashboardMvpView,
 
     @Override
     public void onStoryClick(Story story) {
-        AppLogger.d(story.toString());
+        mPresenter.storeStory(story);
+        getBaseActivity().switchScreen(2);
     }
 
     @Override

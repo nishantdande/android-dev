@@ -4,6 +4,7 @@ package com.dev.di.module;
 import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.dev.data.network.model.Story;
@@ -17,6 +18,9 @@ import com.dev.ui.main.dashboard.DashboardAdapter;
 import com.dev.ui.main.dashboard.DashboardMvpPresenter;
 import com.dev.ui.main.dashboard.DashboardMvpView;
 import com.dev.ui.main.dashboard.DashboardPresenter;
+import com.dev.ui.main.details.DetailsMvpPresenter;
+import com.dev.ui.main.details.DetailsMvpView;
+import com.dev.ui.main.details.DetailsPresenter;
 import com.dev.ui.main.login.LoginMvpPresenter;
 import com.dev.ui.main.login.LoginMvpView;
 import com.dev.ui.main.login.LoginPresenter;
@@ -32,9 +36,9 @@ import io.reactivex.disposables.CompositeDisposable;
 @Module
 public class ActivityModule {
 
-    private AppCompatActivity mActivity;
+    private FragmentActivity mActivity;
 
-    public ActivityModule(AppCompatActivity activity) {
+    public ActivityModule(FragmentActivity activity) {
         this.mActivity = activity;
     }
 
@@ -45,7 +49,7 @@ public class ActivityModule {
     }
 
     @Provides
-    AppCompatActivity provideActivity() {
+    FragmentActivity provideActivity() {
         return mActivity;
     }
 
@@ -74,8 +78,8 @@ public class ActivityModule {
     }
 
     @Provides
-    MainPagerAdapter provideMainPagerAdapter(AppCompatActivity activity) {
-        return new MainPagerAdapter(activity.getSupportFragmentManager());
+    MainPagerAdapter provideMainPagerAdapter(FragmentActivity activity) {
+        return new MainPagerAdapter(activity);
     }
 
     @Provides
@@ -86,12 +90,19 @@ public class ActivityModule {
     }
 
     @Provides
-    DashboardAdapter provideBlogAdapter() {
+    DashboardAdapter provideDashboardAdapter() {
         return new DashboardAdapter(new ArrayList<Story>());
     }
 
     @Provides
-    LinearLayoutManager provideLinearLayoutManager(AppCompatActivity activity) {
+    LinearLayoutManager provideLinearLayoutManager(FragmentActivity activity) {
         return new LinearLayoutManager(activity);
+    }
+
+    @Provides
+    @PerActivity
+    DetailsMvpPresenter<DetailsMvpView> provideDetailsPresenter(
+            DetailsPresenter<DetailsMvpView> presenter) {
+        return presenter;
     }
 }

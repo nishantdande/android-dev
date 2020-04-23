@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/AppThemeTextStyle</item>
+        <item name="editTextStyle">@style/AppThemeEditTextStyle</item>
+        <item name="textInputStyle">@style/AppThemeTextInputStyle</item>
     </style>
 
     <style name="ThemeYellow" parent="Theme.AppCompat.Light.NoActionBar">
@@ -13,6 +16,24 @@
         <item name="colorPrimary">#FFDE03</item>
         <item name="colorPrimaryDark">#0336FF</item>
         <item name="colorAccent">#FF0266</item>
+        <item name="textInputStyle">@style/ThemeYellowTextInputStyle</item>
+        <item name="android:textViewStyle">@style/ThemeYellowTextStyle</item>
     </style>
 
+    <style name="AppThemeTextStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="ThemeYellowTextStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="AppThemeEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="AppThemeTextInputStyle" parent="Widget.Design.TextInputLayout">
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+    <style name="ThemeYellowTextInputStyle" parent="Widget.Design.TextInputLayout">
+        <item name="android:textColorHint">#0336FF</item>
+    </style>
 </resources>

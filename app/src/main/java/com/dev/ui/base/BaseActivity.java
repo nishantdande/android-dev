@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.dev.DevApplication;
 import com.dev.R;
@@ -29,7 +30,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import butterknife.Unbinder;
 
-public abstract class BaseActivity extends AppCompatActivity
+public abstract class BaseActivity extends FragmentActivity
         implements MvpView, BaseFragment.Callback {
 
     private ProgressDialog mProgressDialog;

@@ -65,4 +65,19 @@ public class AppDataManager implements DataManager {
     public void setAccessToken(String accessToken) {
         mPreferencesHelper.setAccessToken(accessToken);
     }
+
+    @Override
+    public void setStory(Story story) {
+        mPreferencesHelper.setStory(story);
+    }
+
+    @Override
+    public Story getStory() {
+        return mPreferencesHelper.getStory();
+    }
+
+    @Override
+    public void clearStory() {
+        mPreferencesHelper.clearStory();
+    }
 }

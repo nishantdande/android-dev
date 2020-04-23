@@ -2,6 +2,7 @@ package com.dev.ui.main.dashboard;
 
 
 import com.dev.data.DataManager;
+import com.dev.data.network.model.Story;
 import com.dev.ui.base.BasePresenter;
 import com.dev.utils.AppLogger;
 import com.dev.utils.rx.SchedulerProvider;
@@ -44,5 +45,10 @@ public class DashboardPresenter<V extends DashboardMvpView> extends BasePresente
                     getMvpView().hideLoading();
                     AppLogger.d("completed");
                 }));
+    }
+
+    @Override
+    public void storeStory(Story story) {
+        getDataManager().setStory(story);
     }
 }
