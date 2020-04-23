@@ -1,0 +1,112 @@
+package com.dev.ui.main.dashboard;
+
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.dev.DevApplication;
+import com.dev.R;
+import com.dev.data.network.model.LoginResponse;
+import com.dev.data.network.model.Story;
+import com.dev.di.component.ActivityComponent;
+import com.dev.ui.base.BaseActivity;
+import com.dev.ui.base.BaseFragment;
+import com.dev.utils.AppLogger;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
+
+public class DashboardFragment extends BaseFragment implements DashboardMvpView, DashboardAdapter.Callback {
+
+    @Inject
+    DashboardMvpPresenter<DashboardMvpView> mPresenter;
+
+    @Inject
+    DashboardAdapter mDashboardAdapter;
+
+    @Inject
+    LinearLayoutManager mLayoutManager;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView mRecyclerView;
+
+    public static DashboardFragment newInstance() {
+        Bundle args = new Bundle();
+        DashboardFragment fragment = new DashboardFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        ActivityComponent component = getActivityComponent();
+        if (component != null) {
+            component.inject(this);
+            setUnBinder(ButterKnife.bind(this, view));
+            mPresenter.onAttach(this);
+        }
+        return view;
+    }
+
+
+    @Override
+    protected void setUp(View view) {
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mDashboardAdapter);
+        mDashboardAdapter.setCallback(this);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser)
+            mPresenter.getTopStories();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mPresenter.onDetach();
+        super.onDestroyView();
+    }
+
+
+    @Override
+    public void onSuccess(ArrayList<Story> stories) {
+        mDashboardAdapter.addItems(stories);
+    }
+
+
+    @Override
+    public void onStoryClick(Story story) {
+        AppLogger.d(story.toString());
+    }
+
+    @Override
+    public void onRetryClick() {
+        mPresenter.getTopStories();
+    }
+}

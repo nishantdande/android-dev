@@ -12,8 +12,10 @@ import android.util.Patterns;
 import com.dev.DevApplication;
 import com.dev.R;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,5 +68,17 @@ public final class CommonUtils {
     public static String initPref(){
         SharedPreferences pref = DevApplication.getContext().getSharedPreferences("android-dev", 0);
         return  pref.getString("PREF_KEY_THEME",null);
+    }
+
+    public static String readJSON(String filename) throws IOException {
+        // Opening data.json file
+        InputStream inputStream = DevApplication.getContext().getAssets().open(filename);
+        BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder responseStringBuilder = new StringBuilder();
+        String line;
+        while ((line = r.readLine()) != null) {
+            responseStringBuilder.append(line).append('\n');
+        }
+        return responseStringBuilder.toString();
     }
 }

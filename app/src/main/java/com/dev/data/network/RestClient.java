@@ -26,7 +26,6 @@ public final class RestClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl("https://hacker-news.firebaseio.com/")
-//                    .baseUrl("https://api.themoviedb.org/3/")
                     .client(client)
                     .build();
 

@@ -55,7 +55,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     protected void setUp() {
-        mPagerAdapter.setCount(1);
+        mPagerAdapter.setCount(2);
+        mViewPager.setOffscreenPageLimit(0);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(0);
     }
@@ -68,6 +69,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
+    protected void navigateScreen(int value) {
+        mViewPager.setCurrentItem(value);
+    }
+
+    @Override
     public void setTheme(String theme) {
         if (theme != null && theme.equals("ThemeYellow")) {
             setTheme(R.style.ThemeYellow);
@@ -75,6 +81,12 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         else{
             setTheme(R.style.AppTheme);
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (mViewPager.getCurrentItem() > 0)
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1);
+        super.onBackPressed();
     }
 }

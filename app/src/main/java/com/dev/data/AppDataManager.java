@@ -2,16 +2,19 @@ package com.dev.data;
 
 import android.content.Context;
 
-import com.dev.data.network.ApiEndpoint;
 import com.dev.data.network.ApiHelper;
 import com.dev.data.network.model.LoginRequest;
 import com.dev.data.network.model.LoginResponse;
+import com.dev.data.network.model.Story;
 import com.dev.data.prefs.PreferencesHelper;
 import com.dev.di.ApplicationContext;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @Singleton
@@ -36,6 +39,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request) {
         return mApiHelper.doServerLoginApiCall(request);
+    }
+
+    @Override
+    public Observable<ArrayList<Story>> getTopStories() {
+        return mApiHelper.getTopStories();
     }
 
     @Override

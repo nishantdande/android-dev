@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.dev.ui.main.dashboard.DashboardFragment;
 import com.dev.ui.main.login.LoginFragment;
 
 public class MainPagerAdapter extends FragmentStatePagerAdapter {
@@ -22,8 +23,8 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 return LoginFragment.newInstance();
-//            case 1:
-//                return OpenSourceFragment.newInstance();
+            case 1:
+                return DashboardFragment.newInstance();
             default:
                 return null;
         }

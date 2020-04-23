@@ -135,6 +135,11 @@ public abstract class BaseActivity extends AppCompatActivity
         updateTheme(value);
     }
 
+    @Override
+    public void switchScreen(int value) {
+        navigateScreen(value);
+    }
+
     public void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -167,4 +172,6 @@ public abstract class BaseActivity extends AppCompatActivity
     protected abstract void setUp();
 
     protected abstract void updateTheme(boolean value);
+
+    protected abstract void navigateScreen(int value);
 }

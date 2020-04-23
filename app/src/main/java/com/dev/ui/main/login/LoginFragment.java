@@ -94,6 +94,7 @@ public class LoginFragment extends BaseFragment implements LoginMvpView {
     @Override
     public void onSuccess(LoginResponse loginResponse) {
         AppLogger.d(loginResponse.getAccessToken());
+        getBaseActivity().switchScreen(1);
     }
 
     @Override
@@ -109,7 +110,7 @@ public class LoginFragment extends BaseFragment implements LoginMvpView {
         if(!changeTheme.isPressed()) {
             return;
         }
-        ((BaseActivity)getActivity()).changeTheme(value);
+        getBaseActivity().changeTheme(value);
     }
 
     private String getText(TextInputLayout textInputLayout){

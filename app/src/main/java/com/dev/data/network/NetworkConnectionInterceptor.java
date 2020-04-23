@@ -5,8 +5,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.dev.DevApplication;
+import com.dev.utils.CommonUtils;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -24,18 +26,31 @@ public class NetworkConnectionInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         if (!isConnected()) {
-            throw new IOException("No Network Available");
-            // Throwing our custom exception 'NoConnectivityException'
+            String responseMessage = CommonUtils.readJSON("error/bad_request.json");
+            throw new IOException(responseMessage);
         }
 
         Request.Builder builder = chain.request().newBuilder();
         return chain.proceed(builder.build());
     }
 
-    public boolean isConnected(){
+    boolean isConnected(){
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
         return (netInfo != null && netInfo.isConnected());
     }
 
+    public static Exception handleNetworkError(Throwable throwable){
+        if (throwable instanceof IOException){
+            String responseMessage = null;
+            try {
+                responseMessage = CommonUtils.readJSON("error/bad_request.json");
+                throw new IOException(responseMessage);
+            } catch (IOException ex) {
+                return new IOException(throwable.getMessage());
+            }
+        } else {
+            return new Exception(throwable.getMessage());
+        }
+    }
 }

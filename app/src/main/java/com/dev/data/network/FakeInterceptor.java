@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import com.dev.utils.CommonUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,17 +47,15 @@ public class FakeInterceptor implements Interceptor {
         String method = chain.request().method().toLowerCase();
 
         Response response = null;
-        // Get Request URI.
 
         Uri uri = Uri.parse(chain.request().url().uri().toString());
-        Log.d(TAG, "--> Request url: [" + method.toUpperCase() + "]" + uri.toString());
 
         if (Objects.requireNonNull(uri.getPath()).contains("login")){
             String responseFileName = null;
             if (uri.getQueryParameter("username").equals("test@worldofplay.in") &&
                     uri.getQueryParameter("password").equals("Worldofplay@2020")) {
                 responseFileName = "success/login.json";
-                String responseMessage = readJSON(responseFileName);
+                String responseMessage = CommonUtils.readJSON(responseFileName);
                 response = new Response.Builder()
                         .code(200)
                         .message(responseMessage.toString())
@@ -66,25 +66,14 @@ public class FakeInterceptor implements Interceptor {
                         .build();
             } else {
                 responseFileName = "error/incorrect_credential.json";
-                String responseMessage = readJSON(responseFileName);
+                String responseMessage = CommonUtils.readJSON(responseFileName);
                 throw new IOException(responseMessage);
             }
+        } else {
+            return chain.proceed(chain.request());
         }
-
-
-        Log.d(TAG, "<-- END [" + method.toUpperCase() + "]" + uri.toString());
         return response;
     }
 
-    String readJSON(String filename) throws IOException {
-            // Opening data.json file
-            InputStream inputStream = mContext.getAssets().open(filename);
-            BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder responseStringBuilder = new StringBuilder();
-            String line;
-            while ((line = r.readLine()) != null) {
-                responseStringBuilder.append(line).append('\n');
-            }
-        return responseStringBuilder.toString();
-    }
+
 }

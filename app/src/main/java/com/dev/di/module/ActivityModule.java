@@ -4,18 +4,26 @@ package com.dev.di.module;
 import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.dev.data.network.model.Story;
 import com.dev.di.ActivityContext;
 import com.dev.di.PerActivity;
 import com.dev.ui.main.MainMvpPresenter;
 import com.dev.ui.main.MainMvpView;
 import com.dev.ui.main.MainPagerAdapter;
 import com.dev.ui.main.MainPresenter;
+import com.dev.ui.main.dashboard.DashboardAdapter;
+import com.dev.ui.main.dashboard.DashboardMvpPresenter;
+import com.dev.ui.main.dashboard.DashboardMvpView;
+import com.dev.ui.main.dashboard.DashboardPresenter;
 import com.dev.ui.main.login.LoginMvpPresenter;
 import com.dev.ui.main.login.LoginMvpView;
 import com.dev.ui.main.login.LoginPresenter;
 import com.dev.utils.rx.AppSchedulerProvider;
 import com.dev.utils.rx.SchedulerProvider;
+
+import java.util.ArrayList;
 
 import dagger.Module;
 import dagger.Provides;
@@ -70,4 +78,20 @@ public class ActivityModule {
         return new MainPagerAdapter(activity.getSupportFragmentManager());
     }
 
+    @Provides
+    @PerActivity
+    DashboardMvpPresenter<DashboardMvpView> provideDashboardPresenter(
+            DashboardPresenter<DashboardMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    DashboardAdapter provideBlogAdapter() {
+        return new DashboardAdapter(new ArrayList<Story>());
+    }
+
+    @Provides
+    LinearLayoutManager provideLinearLayoutManager(AppCompatActivity activity) {
+        return new LinearLayoutManager(activity);
+    }
 }
