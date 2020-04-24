@@ -1,11 +1,7 @@
 package com.dev.ui.base;
 
-import com.dev.R;
 import com.dev.data.DataManager;
-import com.dev.ui.error.Error;
 import com.dev.utils.rx.SchedulerProvider;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javax.inject.Inject;
 

@@ -1,7 +1,5 @@
 package com.dev.ui.base;
 
-import com.dev.ui.error.Error;
-
 /**
  * Every presenter in the app must either implement this interface or extend BasePresenter
  * indicating the MvpView type that wants to be attached with.
