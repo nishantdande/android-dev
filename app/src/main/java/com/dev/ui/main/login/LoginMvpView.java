@@ -9,4 +9,6 @@ public interface LoginMvpView extends MvpView {
     void onSuccess(LoginResponse loginResponse);
 
     void updateThemeUi(String theme);
+
+    void valid(boolean value);
 }

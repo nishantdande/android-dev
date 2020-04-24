@@ -46,6 +46,7 @@
         android:layout_marginTop="32dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usernameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
@@ -60,10 +61,11 @@
         android:layout_marginTop="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textEmailAddress" />
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,9 +74,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="?attr/colorAccent"
         android:textColor="@color/white"
+        android:background="@drawable/btn_state"
         android:textAllCaps="false"
+        android:enabled="false"
         android:text="Get Login" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

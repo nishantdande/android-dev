@@ -58,6 +58,27 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
     }
 
     @Override
+    public void checkValidation(String username, String password) {
+        if (username == null || username.isEmpty()) {
+            getMvpView().onError(R.string.empty_email);
+            getMvpView().valid(false);
+            return;
+        }
+        if (!CommonUtils.isEmailValid(username)) {
+            getMvpView().onError(R.string.invalid_email);
+            getMvpView().valid(false);
+            return;
+        }
+        if (password == null || password.isEmpty()) {
+            getMvpView().onError(R.string.empty_password);
+            getMvpView().valid(false);
+            return;
+        }
+
+        getMvpView().valid(true);
+    }
+
+    @Override
     public void getTheme() {
         getMvpView().updateThemeUi(getDataManager().getTheme());
     }

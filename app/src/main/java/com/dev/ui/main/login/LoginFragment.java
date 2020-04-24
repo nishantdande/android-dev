@@ -2,6 +2,8 @@ package com.dev.ui.main.login;
 
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,12 @@ public class LoginFragment extends BaseFragment implements LoginMvpView {
     @BindView(R.id.changeTheme)
     SwitchCompat changeTheme;
 
+    @BindView(R.id.usernameEditText)
+    TextInputEditText usernameEditText;
+
+    @BindView(R.id.passwordEditText)
+    TextInputEditText passwordEditText;
+
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
         LoginFragment fragment = new LoginFragment();
@@ -71,7 +79,8 @@ public class LoginFragment extends BaseFragment implements LoginMvpView {
 
     @Override
     protected void setUp(View view) {
-
+        usernameEditText.addTextChangedListener(mTextWatcher);
+        passwordEditText.addTextChangedListener(mTextWatcher);
     }
 
 
@@ -83,6 +92,7 @@ public class LoginFragment extends BaseFragment implements LoginMvpView {
 
     @OnClick(R.id.login)
     public void login(){
+        login.setEnabled(true);
         mPresenter.onServerLoginClick(getText(username), getText(password));
     }
 
@@ -105,6 +115,11 @@ public class LoginFragment extends BaseFragment implements LoginMvpView {
             changeTheme.setChecked(false);
     }
 
+    @Override
+    public void valid(boolean value) {
+        login.setEnabled(value);
+    }
+
     @OnCheckedChanged(R.id.changeTheme)
     void changeTheme(boolean value){
         if(!changeTheme.isPressed()) {
@@ -116,4 +131,21 @@ public class LoginFragment extends BaseFragment implements LoginMvpView {
     private String getText(TextInputLayout textInputLayout){
         return textInputLayout.getEditText().getText().toString();
     }
+
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            // check Fields For Empty Values
+            mPresenter.checkValidation(getText(username), getText(password));
+        }
+    };
+
 }

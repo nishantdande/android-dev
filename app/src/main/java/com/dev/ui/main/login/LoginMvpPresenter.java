@@ -8,5 +8,7 @@ public interface LoginMvpPresenter<V extends LoginMvpView> extends MvpPresenter<
 
     void onServerLoginClick(String username, String password);
 
+    void checkValidation(String username, String password);
+
     void getTheme();
 }

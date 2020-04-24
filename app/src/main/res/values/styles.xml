@@ -20,6 +20,11 @@
         <item name="android:textViewStyle">@style/ThemeYellowTextStyle</item>
     </style>
 
+    <style name="AppThemeButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+
     <style name="AppThemeTextStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/white</item>
     </style>
