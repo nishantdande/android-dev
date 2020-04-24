@@ -72,7 +72,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<ArrayList<Story>> getTopStories() {
+    public Observable<ArrayList<Story>> getTopStories(int pageCount) {
         AtomicInteger count = new AtomicInteger();
         return Observable.create(new ObservableOnSubscribe<ArrayList<Story>>() {
             @Override
@@ -85,8 +85,13 @@ public class AppApiHelper implements ApiHelper {
                         if (response.body() != null){
                             int i = 0;
                             ArrayList<Story> stories = new ArrayList<>();
+                            if (pageCount <= 22){
+                                int len = pageCount * 19;
+                                for (int j = 0; j <= len; j++) {
+                                    response.body().remove(j);
+                                }
+                            }
                             for (String id: response.body() ) {
-
                                 if (i <= 20) {
                                     final Call<Story> story = RestClient.getClient().getTopStories(id);
                                     story.enqueue(new Callback<Story>() {

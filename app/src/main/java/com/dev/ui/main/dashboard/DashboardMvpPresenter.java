@@ -7,7 +7,7 @@ import com.dev.ui.base.MvpPresenter;
 @PerActivity
 public interface DashboardMvpPresenter<V extends DashboardMvpView> extends MvpPresenter<V> {
 
-    void getTopStories();
+    void getTopStories(int pageCount);
 
     void storeStory(Story story);
 }

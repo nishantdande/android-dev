@@ -24,14 +24,14 @@ import butterknife.OnClick;
 
 public class DashboardAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    public static final int VIEW_TYPE_EMPTY = 0;
-    public static final int VIEW_TYPE_NORMAL = 1;
+    private static final int VIEW_TYPE_EMPTY = 0;
+    private static final int VIEW_TYPE_NORMAL = 1;
 
     private Callback mCallback;
-    private List<Story> mBlogResponseList;
+    private List<Story> mStories;
 
-    public DashboardAdapter(List<Story> blogResponseList) {
-        mBlogResponseList = blogResponseList;
+    public DashboardAdapter(List<Story> mStories) {
+        this.mStories = mStories;
     }
 
     public void setCallback(Callback callback) {
@@ -59,7 +59,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (mBlogResponseList != null && mBlogResponseList.size() > 0) {
+        if (mStories != null && mStories.size() > 0) {
             return VIEW_TYPE_NORMAL;
         } else {
             return VIEW_TYPE_EMPTY;
@@ -68,15 +68,19 @@ public class DashboardAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (mBlogResponseList != null && mBlogResponseList.size() > 0) {
-            return mBlogResponseList.size();
+        if (mStories != null && mStories.size() > 0) {
+            return mStories.size();
         } else {
             return 1;
         }
     }
 
-    public void addItems(List<Story> blogList) {
-        mBlogResponseList.addAll(blogList);
+    public void addItems(List<Story> stories) {
+        if (mStories.size()>0){
+            mStories.addAll(mStories.size()-1,stories);
+        } else {
+            mStories.addAll(0,stories);
+        }
         notifyDataSetChanged();
     }
 
@@ -107,24 +111,23 @@ public class DashboardAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             super.onBind(position);
 
-            final Story blog = mBlogResponseList.get(position);
+            final Story story = mStories.get(position);
 
-
-            if (blog.getTitle() != null) {
-                titleTextView.setText(blog.getTitle());
+            if (story.getTitle() != null) {
+                titleTextView.setText(story.getTitle());
             }
 
-            if (blog.getType() != null) {
-                contentTextView.setText(blog.getType());
+            if (story.getType() != null) {
+                contentTextView.setText(story.getType());
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (blog != null) {
+                    if (story != null) {
                         try {
                             if (mCallback != null)
-                                mCallback.onStoryClick(blog);
+                                mCallback.onStoryClick(story);
                         } catch (Exception e) {
                             AppLogger.d("url error");
                         }

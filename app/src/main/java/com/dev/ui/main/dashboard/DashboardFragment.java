@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -48,6 +49,8 @@ public class DashboardFragment extends BaseFragment implements DashboardMvpView,
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
+    int mPageCount =0;
+
     public static DashboardFragment newInstance() {
         Bundle args = new Bundle();
         DashboardFragment fragment = new DashboardFragment();
@@ -77,13 +80,24 @@ public class DashboardFragment extends BaseFragment implements DashboardMvpView,
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mDashboardAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    mPresenter.getTopStories(++mPageCount);
+                }
+            }
+        });
         mDashboardAdapter.setCallback(this);
+        mPresenter.getTopStories(mPageCount);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.getTopStories();
+
     }
 
     @Override
@@ -107,6 +121,6 @@ public class DashboardFragment extends BaseFragment implements DashboardMvpView,
 
     @Override
     public void onRetryClick() {
-        mPresenter.getTopStories();
+        mPresenter.getTopStories(mPageCount);
     }
 }

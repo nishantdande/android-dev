@@ -42,8 +42,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<ArrayList<Story>> getTopStories() {
-        return mApiHelper.getTopStories();
+    public Observable<ArrayList<Story>> getTopStories(int pageCount) {
+        return mApiHelper.getTopStories(pageCount);
     }
 
     @Override

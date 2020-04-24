@@ -14,6 +14,6 @@ public interface ApiHelper {
 
     Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request);
 
-    Observable<ArrayList<Story>> getTopStories();
+    Observable<ArrayList<Story>> getTopStories(int pageCount);
 
 }

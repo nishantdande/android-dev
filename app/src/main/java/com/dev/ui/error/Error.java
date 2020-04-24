@@ -19,7 +19,6 @@ public class Error extends Exception {
     public static final int API_STATUS_CODE_LOCAL_ERROR = 0;
 
     private String error;
-    private String description;
 
     private String errorBody;
 
@@ -92,20 +91,4 @@ public class Error extends Exception {
         this.errorBody = errorBody;
     }
 
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

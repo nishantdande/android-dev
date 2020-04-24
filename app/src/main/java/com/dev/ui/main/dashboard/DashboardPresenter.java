@@ -29,11 +29,11 @@ public class DashboardPresenter<V extends DashboardMvpView> extends BasePresente
 
 
     @Override
-    public void getTopStories() {
+    public void getTopStories(int pageCount) {
         AtomicInteger i = new AtomicInteger();
         getMvpView().showLoading();
         getCompositeDisposable().add(getDataManager()
-                .getTopStories()
+                .getTopStories(pageCount)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(stories -> {

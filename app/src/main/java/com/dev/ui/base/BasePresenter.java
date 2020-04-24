@@ -70,54 +70,6 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
         return mCompositeDisposable;
     }
 
-    @Override
-    public void handleApiError(Error error) {
-
-        if (error == null || error.getErrorBody() == null) {
-            getMvpView().onError(R.string.api_default_error);
-            return;
-        }
-
-        if (error.getErrorCode() == Error.API_STATUS_CODE_LOCAL_ERROR
-                && error.getErrorDetail().equals(Error.CONNECTION_ERROR)) {
-            getMvpView().onError(R.string.connection_error);
-            return;
-        }
-
-        if (error.getErrorCode() == Error.API_STATUS_CODE_LOCAL_ERROR
-                && error.getErrorDetail().equals(Error.REQUEST_CANCELLED_ERROR)) {
-            getMvpView().onError(R.string.api_retry_error);
-            return;
-        }
-
-        final GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-        final Gson gson = builder.create();
-
-//        try {
-//            ApiError apiError = gson.fromJson(error.getErrorBody(), ApiError.class);
-//
-//            if (apiError == null || apiError.getMessage() == null) {
-//                getMvpView().onError(R.string.api_default_error);
-//                return;
-//            }
-//
-//            switch (error.getErrorCode()) {
-//                case HttpsURLConnection.HTTP_UNAUTHORIZED:
-//                case HttpsURLConnection.HTTP_FORBIDDEN:
-//                    setUserAsLoggedOut();
-//                    getMvpView().openActivityOnTokenExpire();
-//                case HttpsURLConnection.HTTP_INTERNAL_ERROR:
-//                case HttpsURLConnection.HTTP_NOT_FOUND:
-//                default:
-//                    getMvpView().onError(apiError.getMessage());
-//            }
-//        } catch (JsonSyntaxException | NullPointerException e) {
-//            Log.e(TAG, "handleApiError", e);
-//            getMvpView().onError(R.string.api_default_error);
-//        }
-    }
-
-
     public static class MvpViewNotAttachedException extends RuntimeException {
         public MvpViewNotAttachedException() {
             super("Please call Presenter.onAttach(MvpView) before" +
