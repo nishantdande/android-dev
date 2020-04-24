@@ -49,7 +49,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
-            android:text="test@worldofplay.in"
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,7 +63,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:text="Worldofplay@2020"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
