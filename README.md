@@ -1,2 +1,2 @@
 # android-dev
-Android Test 
+Android Test Application
